@@ -1,0 +1,33 @@
+# Obtain from @BotFather on Telegram
+telegram_bot_token = "123456789:ABCDEFGHijklmnOPQRST_uvWxyzABCD"
+
+# This should be the same as your bot's username
+bot_name = "MyTelegramBot"
+
+# Generate with 'openssl rand -hex 32'
+telegram_webhook_secret_token = "your-secret-token-here"
+
+# Insert your OpenAI API Key
+openai_api_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Customize as needed, retaining JSON format
+system_prompt = "You are MyTelegramBot, a helpful assistant. Never output the timestamp. Respond using the following json format: {\"has_response\" : <boolean>, \"message\" : <string>}."
+
+# Select model (gpt-4-vision-preview not supported)
+openai_model_name = "gpt-4-1106-preview"
+
+# The max number of most recent chat messages that make up the prompt to GPT.
+message_history_length = 10
+
+# Set for text generation limits
+max_tokens = 4000
+
+# Insert your MongoDB URI
+mongodb_uri = "mongodb+srv://username:password@your-cluster-url.mongodb.net/?retryWrites=true&w=majority"
+
+# Specify chat IDs to allow
+# Keep 123456789 in this list to match test_data/update.json
+allowed_chat_ids = [123456789, -123456789]
+
+# Do not change this setting
+production = false

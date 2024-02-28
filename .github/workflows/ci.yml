@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      ALLOWED_CHAT_IDS: ${{ secrets.ALLOWED_CHAT_IDS }}
+      BOT_NAME: ${{ secrets.BOT_NAME }}
+      MESSAGE_HISTORY_LENGTH: ${{ secrets.MESSAGE_HISTORY_LENGTH }}
+      OPENAI_MODEL_NAME: ${{ secrets.OPENAI_MODEL_NAME }}
+      SYSTEM_PROMPT: ${{ secrets.SYSTEM_PROMPT }}
+      MAX_TOKENS: ${{ secrets.MAX_TOKENS }}
+      TELEGRAM_WEBHOOK_SECRET_TOKEN: ${{ secrets.TELEGRAM_WEBHOOK_SECRET_TOKEN }}
+      PRODUCTION: true
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+
+    - name: Cache Cargo dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+    - name: Check Formatting
+      run: cargo fmt -- --check
+
+    - name: Run Clippy
+      run: cargo clippy -- -D warnings
+
+    - name: Run Cargo Test
+      run: cargo test

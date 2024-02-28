@@ -1,0 +1,32 @@
+# Cargo.toml
+[package]
+name = "telegramgpt"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0.193", features = ["derive"] }
+lambda_http = "0.8.3"
+serde_json = "1.0.108"
+tokio = "1.34.0"
+tracing = { version = "0.1.40", features = ["log"] }
+tracing-subscriber = { version = "0.3.18", default-features = false, features = [
+    "fmt",
+    "env-filter",
+    "json",
+] }
+hcl-rs = "0.16.6"
+reqwest = { version = "0.11.22",   default-features = false, features = ["rustls-tls", "json"] }
+chrono = "0.4.31"
+mongodb = "2.7.1"
+regex = "1.10.2"
+futures = "0.3.29"
+test-log = { version = "0.2.13", features = ["trace"] }
+env_logger = "0.10.1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = "debuginfo"
